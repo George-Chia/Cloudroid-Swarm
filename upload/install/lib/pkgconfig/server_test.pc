@@ -1,0 +1,8 @@
+prefix=/home/dev/catkin_ws/install
+
+Name: server_test
+Description: Description of server_test
+Version: 0.0.0
+Cflags: -I/home/dev/catkin_ws/install/include
+Libs: -L/home/dev/catkin_ws/install/lib 
+Requires: message_runtime

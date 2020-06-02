@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set active_page = "addnode" %} 
+{% block content %}
+<html lang="zh-cn">
+
+
+
+<div>
+<h2>Add Node</h2>
+
+<form action="{{ url_for('addnode') }}" method="post" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+      <table>
+        <tr>
+          <td><b>Node Name</b> {{ form.nodename(size=31, class="form-control") }}</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td><b>Node IP</b> {{ form.nodeip(size=31, class="form-control") }}</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <tr>
+        <td>
+          <button type="submit" class="btn btn-info" name="do_action" value="upload" onclick="$('#loading').show();$('#hiding').hide();">Submit</button>
+        </td>
+      </tr>
+
+      </table>
+    </div>
+  </div>
+</form>
+
+
+</div>
+</html>
+{% endblock %}

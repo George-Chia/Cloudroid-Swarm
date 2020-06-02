@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="fcfa55e7-fc1a-44ff-a678-455255d6fbfd" name="cloudroid_swarm" url="http://192.168.4.105">
+        <fileTransfer host="192.168.4.105" port="22" rootFolder="/home/itcast" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,17 @@
+{
+   "subscribed_topics": [{
+      "topic_name":"/person_infooo",
+      "compression":"none"
+   }],
+   "published_topics": [],
+   "advertised_services": [],
+   "advertised_actions": [],
+   
+   "start_cmds": ["rosrun learning_topic person_subscriber"],
+
+   "mem_limit": "1073741824",
+   "memswap_limit" : "1073741824",
+   "cpushares":"100",
+   "cpusetcpus":"0,1"
+}
+   
