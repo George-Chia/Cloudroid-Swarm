@@ -1,6 +1,6 @@
-# Cloudroid 
+# Cloudroid Swarm
 ## Introduction
-Cloudroid is a cloud robotic platform which supports the direct deployment of ROS software packages onto the cloud. Basically, it can be regarded as a PAAS platform which adopts the ROS application model. A ROS package can be covnerted into a cloud service automatically. The robotic applications can access the cloud service remotely in an on-demand style through a WebSocket protocol.
+Cloudroid Swarm is a cloud robotic platform which supports the direct deployment of ROS software packages onto the cloud. Basically, it can be regarded as a PAAS platform which adopts the ROS application model. A ROS package can be covnerted into a cloud service automatically. The robotic applications can access the cloud service remotely in an on-demand style through a WebSocket protocol.
 
 The service access is purely based on a cloud service paradigm, which means that you need not concern ROS master and other configurations. Multiple robots can access a service simultaneously, for example, to build their own map respectively. The robotic apllications which access the cloud services also need no modification, because Cloudrid can generate a stub ROS package with the same interface of the original ROS package, which acts as a local proxy of the remote cloud service.
 
@@ -9,10 +9,10 @@ By adopting the docker container technology in the back-end, a ROS package which
 Please contact us through dingbo@nudt.edu.cn or bding@msn.com. Any feedback would be greatly appreciated.
 
 
-## Build Cloudroid
-Cloudroid is built and tested on Ubuntu 14.04, ROS indigo.
+## Build Cloudroid Swarm
+Cloudroid Swarm is built and tested on Ubuntu 18.04, ROS melodic.
 
-1. Since it currently based on Docker Swarm, Docker(https://docs.docker.com/engine/installation/linux/ubuntu/) must be installed on each host nodes.
+1. Since it currently based on kubernetes and Docker, Docker(https://docs.docker.com/engine/installation/linux/ubuntu/) must be installed on each host nodes.
 
 2. Add user to the Docker group, logout and login again:
 
@@ -20,10 +20,9 @@ Cloudroid is built and tested on Ubuntu 14.04, ROS indigo.
     sudo addgroup $USER docker
 ``` 
 
-3. Initialize the Swarm cluster, and setup the local registry:
+3. Setup the local registry:
 
 ```bash
-    docker swarm init 
     docker run -d -p 5000:5000 --restart=always --name registry registry:2
 ```
 
@@ -38,7 +37,7 @@ Cloudroid is built and tested on Ubuntu 14.04, ROS indigo.
 5. In the root directory of Cloudroid project, install other python requirements:
 
 ```bash
-    git clone https://github.com/zhangpf/cloudroid
+    git clone https://github.com/George-Chia
     cd Cloudroid/
     git submodule update --recursive
     sudo pip install -r requirements.txt
@@ -54,7 +53,12 @@ Cloudroid is built and tested on Ubuntu 14.04, ROS indigo.
     docker push localhost:5000/ros:my
 ```    
 
-7. Run cloudroid server:
+7. Initialise the database.
+'''bash
+    cd ../database
+    mysql -ucloudroid -p1234 -Dcloudroid ./create_cloudroid_tables.sql
+
+8. Run Cloudroid Swarm server:
 
 ```bash
     cd ..
