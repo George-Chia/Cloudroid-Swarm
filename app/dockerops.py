@@ -268,7 +268,7 @@ def uploadFile(ros_file, manifest_file, comments):
         logging.error(error_string)
         return error_string
 
-    shutil.rmtree(temp_path)
+    shutil.rmtree(temp_path) # shutil.rmtree() 表示递归删除文件夹下的所有子文件夹和子文件。
 
     '''Insert a new record to the image table in the database'''
     image_record = Image(imagename=image_name, uploadname=ros_file.filename, comments=comments,
@@ -324,12 +324,13 @@ def getServicePort(image_name, node_port):
     logging.info('Starting a new k8s deployment and services with image %s', image_name)
 
     try:
-        # 仅测试使用 image = registry + '/' + image_name
-        image = "ros:test"
+        image = registry + '/' + image_name
+        # 仅测试使用 image = "ros:test"
         deployment_name = "cloudroid"  # 无集群代码中可以直接指定，有集群代码需区分
         # k8s基本配置
         config.load_kube_config()
         apps_v1_api = client.AppsV1Api()
+        # 后期若想提升性能或可靠性，可以增加replica
         create_deployment(apps_v1_api, image=image, deployment_name=deployment_name, label={"app": deployment_name})
         create_service(deployment_name=deployment_name, label={"app": deployment_name})
 
@@ -343,13 +344,14 @@ def getServicePort(image_name, node_port):
             deployment_name=deployment_name)  # list_service().items 是list类型   -----> k8s的Python返回值中，[]代表列表，{}代表类
         # 通过labels找到pod,再找到其host-IP
         label_selector = "app=" + deployment_name
-        node_ip = get_nodeip(deployment_name=deployment_name,label_selector=label_selector)
+        node_ip = get_nodeip(deployment_name=deployment_name, label_selector=label_selector)
         # 在不使用集群时，node_port可以固定，node_ip就是k8s所在主机ip
     except Exception, e:
         logging.error('Unable to get information from deployment or service. \nReason: %s', str(e))
         return
 
     # 修改nginx配置文件（Ubuntu下，centos下不同）
+    # 后期涉及云-边-端协同时，最好是pod在哪个节点上，就在哪个节点上配置nginx，保证边端通信不涉及云端。当然这是建立在如下假设上：外部访问集群中的node的clusterip不用通过云端server。
     nginx_config = render_template('nginx.config', node_port=node_port, node_ip=node_ip, cluster_ip=cluster_ip)
     with open("/etc/nginx/sites-available/default", "wb") as fh:
         fh.write(nginx_config)
@@ -367,7 +369,7 @@ def getServicePort(image_name, node_port):
         usern = imageinfo.uploaduser
         deployment_record = Deployment(deployment_name=deployment_name, createdtime=str(time.time()),
                                        imagename=image_name,
-                                       uploadname=uploadn, username=usern, firstcreatetime=datetime.now(), 
+                                       uploadname=uploadn, username=usern, firstcreatetime=datetime.now(),
                                        nodeip=node_ip)
         db.session.add(deployment_record)
         db.session.commit()
@@ -489,7 +491,7 @@ def StringToListOfDict(stringa):
             logging.info(lista[i])
             if lista[i] != "":
                 listb.append(ast.literal_eval(lista[i]))
-        listb.pop()
+        #listb.pop()
         return listb
 
 

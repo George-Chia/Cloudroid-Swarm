@@ -308,7 +308,7 @@ def get_instance(image_name):
     return 'ws://' + str(getServicePort(image_name, node_port))
 
 
-@app.route('/ping/<string:service_id>', methods=['GET'])
+@app.route('/ping/<string:deployment_name>', methods=['GET'])
 def ping(deployment_name):
     from app import db, models
     from models import Deployment
@@ -327,9 +327,9 @@ def ping(deployment_name):
         db.session.commit()'''
         pass
     else:
-        return "The service " + service_id + " has been removed!"
+        return "The service " + deployment_name + " has been removed!"
 
-    return "There are existing service:" + service_id
+    return "There are existing deployment:" + deployment_name
 
 
 @app.route('/test', methods=['GET'])

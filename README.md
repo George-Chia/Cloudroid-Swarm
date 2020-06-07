@@ -54,9 +54,12 @@ Cloudroid Swarm is built and tested on Ubuntu 18.04, ROS melodic.
 ```    
 
 7. Initialise the database.
-'''bash
+
+```bash
     cd ../database
     mysql -ucloudroid -p1234 -Dcloudroid ./create_cloudroid_tables.sql
+```
+
 
 8. Run Cloudroid Swarm server:
 
