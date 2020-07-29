@@ -1,6 +1,50 @@
 {% extends "base.html" %}
 {% set active_page = "setting" %}
 {% block content %}
+<head>
+
+  <script type="text/javascript">
+    var count = 0;
+    function add1(){
+      count=count+1;
+      edge_id='edge'+count.toString();
+     // alert(node_id);
+      edge_name='Edge Server'+count.toString()+':';
+      var newEle=document.createElement("p");
+      var newText=document.createTextNode(edge_name);
+      newEle.appendChild(newText);
+      var e = document.createElement("input");
+      tr = document.createElement('tr');
+      e.setAttribute('id',edge_id);
+      e.setAttribute('type', 'text');
+      e.style.width= '275px';
+      e.style.height= '35px';
+      e.style.borderRadius= '2%';
+      e.style.margin= '10px';
+      e.style.border= '1px solid #BEBEBE';
+/*      var tr = document.createElement('tr');
+	  var td = document.createElement('td');*/
+	  var btn1 = document.getElementById("org");
+	  document.getElementById('org').appendChild(tr);
+      btn1.insertBefore(newEle,null);
+      btn1.insertBefore(e,null);
+      //tr.appendChild("</td>");
+      //document.getElementById('table').appendChild("</tr>");
+    }
+  </script>
+   <!--
+    <script type="text/javascript">
+      document.getElementById('new').onclick = function() {
+			    var input = document.createElement('input');
+			    var tr = document.createElement('tr');
+			    var td = document.createElement('td');
+			    td.appendChild(input);
+			    tr.appendChild(td);
+			    document.getElementById('table').appendChild(tr);
+      }
+    </script>
+     -->
+</head>
 <form action="{{ url_for('setting') }}" method="post" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   <div class="panel panel-default">
@@ -9,8 +53,19 @@
     <div class="panel-body">
       <table>
         <tr>
-          <td><b>Server IP(IP V4)</b> {{ form.ip(size=31, class="form-control") }}</td>
+          <td><b>Kubernetes Master IP</b> {{ form.ip(size=31, class="form-control") }}</td>
         </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      <tr>
+          <td><b>Edge Servers IP:</b><input type="button" id="new" onclick="add1();" value="+" style="width: 30px; height: 30px; border-radius:50%;border: none"></td>
+      </tr>
+      </table>
+      <table>
+      <tr>
+        <div id="org"></div>
+      </tr>
         <tr>
           <td>&nbsp;</td>
         </tr>
@@ -24,6 +79,7 @@
       </table>
     </div>
   </div>
+
 </form>
 
 <div id="hiding">
