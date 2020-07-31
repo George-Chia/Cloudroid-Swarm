@@ -268,7 +268,7 @@ def uploadFile(ros_file, manifest_file, comments):
         logging.error(error_string)
         return error_string
 
-    shutil.rmtree(temp_path) # shutil.rmtree() 表示递归删除文件夹下的所有子文件夹和子文件。
+    shutil.rmtree(temp_path)  # shutil.rmtree() 表示递归删除文件夹下的所有子文件夹和子文件。
 
     '''Insert a new record to the image table in the database'''
     image_record = Image(imagename=image_name, uploadname=ros_file.filename, comments=comments,
@@ -481,7 +481,7 @@ def ListOfDictToString(lista):
 
 
 def StringToListOfDict(stringa):
-    if stringa == "None":
+    if not stringa or stringa == 'None':
         lista = []
         return lista
     else:
@@ -491,7 +491,7 @@ def StringToListOfDict(stringa):
             logging.info(lista[i])
             if lista[i] != "":
                 listb.append(ast.literal_eval(lista[i]))
-        #listb.pop()
+        # listb.pop()
         return listb
 
 
@@ -509,7 +509,7 @@ def ListToString(lista):
 
 
 def StringToList(stringa):
-    if stringa == "None":
+    if not stringa or stringa == 'None':
         lista = []
         return lista
     else:

@@ -90,7 +90,14 @@ class Deployment(db.Model):
     firstcreatetime = db.Column(db.DateTime())
     nodeip = db.Column(db.String(20))
 
+
 class ServerIP(db.Model):
     __tablename__ = 'serverip'
     uid = db.Column(db.Integer, primary_key = True)
     serverip = db.Column(db.String(100))
+
+
+class EdgeIP(db.Model):
+    __tablename__ = 'edgeip'
+    uid = db.Column(db.Integer, primary_key=True)
+    edgeip = db.Column(db.VARCHAR(100))

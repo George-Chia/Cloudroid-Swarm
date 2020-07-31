@@ -10,7 +10,7 @@ DIALECT = 'mysql'
 DRIVER = 'pymysql'
 USERNAME = 'cloudroid'
 PASSWORD = '1234'
-HOST = '192.168.4.104'
+HOST = '192.168.4.120'
 PORT = '3306'
 DATABASE = 'cloudroid'
 SQLALCHEMY_DATABASE_URI = "{}+{}://{}:{}@{}:{}/{}?charset=utf8".format(DIALECT, DRIVER, USERNAME, PASSWORD, HOST, PORT,DATABASE)

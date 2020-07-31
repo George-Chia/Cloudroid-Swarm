@@ -64,5 +64,5 @@ class NodeForm(FlaskForm):
 
 class SetForm(FlaskForm):
     ip = StringField('IP', validators=[DataRequired("Please enter the IP of server.")])
-
+    #Edgeip = StringField('EdgeIP', validators=[DataRequired("Please enter the IP of server.")])
         

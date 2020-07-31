@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% set active_page = "setting" %}
+{% block content %}
+<head>
+
+
+</head>
+<form action="{{ url_for('setting') }}" method="post" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+      <table>
+        <tr>
+          <td><b>Kubernetes Master IP:</b></td>
+        </tr>
+        <tr>
+        <td>{{ server[0] }}</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      <tr>
+          <td><b>Edge Servers IP:</b></td>
+      </tr>
+      </table>
+      <table>
+        {% for i in range(count) %}
+         <tr>
+           <td>{{'Edge Server'}}{{i+1}}{{':'}}</td>
+           <td>{{ edgeserver[i] }}</td>
+         </tr>
+
+         {% endfor %}
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+</form>
+
+<div id="hiding">
+  {% if succeed %}
+    <div class="alert alert-success" role="alert">
+      <b>OK:</b> Succeeded to reset the server ip </b>.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

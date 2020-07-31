@@ -110,7 +110,23 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
+# original
+# @app.route('/setting', methods=['GET', 'POST'])
+# def setting():
+#     from app.forms import SetForm
+#
+#     form = SetForm()
+#     if form.validate_on_submit():
+#         servers = models.ServerIP.query.all()
+#         for server in servers:
+#             db.session.delete(server)
+#             db.session.commit()
+#         serverip = form.ip.data
+#         u = models.ServerIP(serverip=serverip)
+#         db.session.add(u)
+#         db.session.commit()
+#         return render_template('setting.html', form=form, succeed=True)
+#     return render_template('setting.html', form=form)
 @app.route('/setting', methods=['GET', 'POST'])
 def setting():
     from app.forms import SetForm
@@ -125,9 +141,31 @@ def setting():
         u = models.ServerIP(serverip=serverip)
         db.session.add(u)
         db.session.commit()
-        return render_template('setting.html', form=form, succeed=True)
-    return render_template('setting.html', form=form)
+        count = request.form.get('Hidden1')
+        if count!='':
+            count=int(count)
+            edgeservers = models.EdgeIP.query.all()
+            for i in edgeservers:
+                db.session.delete(i)
+                db.session.commit()
+            #edge=[]
+            for j in range(1,count+1):
+                edgeip='edge'+str(j)
+                esi=request.form.get(edgeip)
+                newedgeip=models.EdgeIP(edgeip=esi)
+                db.session.add(newedgeip)
+            db.session.commit()
+        server=[]
+        edgeserver=[]
+        servers2=models.ServerIP.query.all()
+        edgeservers2 = models.EdgeIP.query.all()
+        for i in servers2:
+            server.append(i.serverip)
+        for j in edgeservers2:
+            edgeserver.append(j.edgeip)
 
+        return render_template('setting2.html', form=form, count=count, server=server,edgeserver=edgeserver,succeed=True)
+    return render_template('setting.html', form=form)
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
@@ -285,7 +323,6 @@ def idetailed(image_name):
 @app.route('/delete/<string:image_name>', methods=['GET'])
 def delete(image_name):
     error_msg = deleteImage(image_name)
-
     return render_template('delete.html', imagename=image_name, error_msg=error_msg)
 
 
@@ -295,7 +332,7 @@ def services():
     return render_template('service.html', servicetables=servicei)
 
 
-@app.route('/remove/<string:serviceid>', methods=['GET'])
+@app.route('/remove/<string:serviceid>', methods=['GET'])   # < type:variable>中是在路径中添加变量,并应用在被映射的函数上；在函数中需要再声明一次
 def remove(serviceid):
     removeDeployment(serviceid)
     servicei = deploymentinfo()
