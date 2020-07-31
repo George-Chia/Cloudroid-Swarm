@@ -65,5 +65,3 @@ Cloudroid Swarm is built and tested on Ubuntu 18.04, ROS melodic, but it's easy 
     cd ..
     python run.py
 ```
-
-Updated setting.html by Shuxiao on July 29, 2020.
